@@ -1,0 +1,50 @@
+<html>
+    <meta charset="utf-8">
+    <body>
+        <script>
+            // login.succ(function( data ){
+            //     header.setAvatar( data.avatar);
+            //     nav.setAvatar( data.avatar );
+            //     message.refresh();
+            //     cart.refresh();
+            //     address.refresh();                // 增加这行代码
+            //  })
+            $.ajax( 'http:// xxx.com?login', function(data){    // 登录成功
+                login.trigger( 'loginSucc', data);    // 发布登录成功的消息
+            }); 
+            var header = (function(){        // header 模块
+                login.listen( 'loginSucc', function( data){
+                    header.setAvatar( data.avatar );
+                });
+                return {
+                     setAvatar: function( data ){
+                            console.log( '设置 header 模块的头像' );
+                        }
+                }
+            })(); 
+ 
+            var nav = (function(){    // nav 模块
+                login.listen( 'loginSucc', function( data ){
+                    nav.setAvatar( data.avatar );
+                });
+                return {
+                    setAvatar: function( avatar ){
+                        console.log( '设置 nav 模块的头像' );
+                    }
+                }
+            })(); 
+
+            //新增
+            var address = (function(){    // nav 模块
+                login.listen( 'loginSucc', function( obj ){
+                    address.refresh( obj );
+                });
+                return {
+                    refresh: function( avatar ){
+                        console.log( '刷新收货地址列表' );
+                    }
+                }
+            })(); 
+        </script>
+    </body>
+</html>

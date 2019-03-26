@@ -1,0 +1,41 @@
+<meta charset="utf-8"/>
+<script>
+    // 使用了 StateFactory，从而避免因为 JavaScript中没有抽象类所带来的问题。 
+var StateFactory = (function(){ 
+ 
+    var State = function(){}; 
+
+    State.prototype.clickHandler1 = function(){         
+        throw new Error( '子类必须重写父类的 clickHandler1 方法' );     
+    } 
+
+    State.prototype.clickHandler2 = function(){        
+        throw new Error( '子类必须重写父类的 clickHandler2 方法' );     
+    } 
+
+    return function( param ){ 
+
+        var F = function( uploadObj ){             
+            this.uploadObj = uploadObj;         
+        }; 
+
+        F.prototype = new State(); 
+
+        for ( var i in param ){             
+            F.prototype[ i ] = param[ i ];         
+        } 
+
+        return F;     
+    } 
+
+})(); 
+
+var SignState = StateFactory({ 
+    clickHandler1: function(){         
+        console.log( '扫描中，点击无效...' ); 
+    },    
+    clickHandler2: function(){         
+        console.log( '文件正在上传中，不能删除' );             
+    } 
+}); 
+</script>

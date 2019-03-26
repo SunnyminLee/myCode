@@ -1,0 +1,59 @@
+<meta charset="utf-8" />
+<script type="text/javascript">
+
+//反柯里化的作用在与扩大函数的适用性，使本来作为特定对象所拥有的功能的函数可以被任意对象所用.
+// 即把如下给定的函数签名，
+
+// obj.func(arg1, arg2)
+// 转化成一个函数形式，签名如下：
+
+// func(obj, arg1, arg2)
+// 这就是 反柯里化的形式化描述。
+
+	//this 加以泛化并得到更广的适用性
+	Function.prototype.uncurrying = function () {
+		var self = this;// self 此时是 Array.prototype.push
+		return function() {
+			var obj = Array.prototype.shift.call( arguments );  
+			console.log(self);
+			console.log(obj);
+			console.log(arguments);
+	        return self.apply( obj, arguments );// 相当于 Array.prototype.push.apply( obj, 4 )
+	    };
+	};
+
+
+//下面的代码是 uncurrying 的另外一种实现方式： 
+	// Function.prototype.uncurrying = function(){
+	// 	var self = this;
+	// 	return function(){
+	// 		    console.log(self);
+	// 		    console.log(arguments);
+
+	// 		return Function.prototype.call.apply( self, arguments );
+	
+	// 	}
+	// }
+
+
+	var push = Array.prototype.push.uncurrying(); 
+
+    //console.log(push);
+
+	(function(){
+		push( arguments, 4 );
+		//console.log( arguments );     // 输出：[1, 2, 3, 4]
+	})( 1, 2, 3 ); 
+
+	// var call = Function.prototype.call.uncurrying();
+	// var fn = function( name ){
+	// 		console.log( name ); 
+	// 	};
+	// 	call( fn, window, 'sven' );     // 输出：sven 
+	// 	var apply = Function.prototype.apply.uncurrying();
+	// 	var fn = function( name ){
+	// 		console.log( this.name );     // 输出："sven" 
+	// 		console.log( arguments );     // 输出: [1, 2, 3]
+	// 	};
+	// 	apply( fn, { name: 'sven' }, [ 1, 2, 3 ] );
+</script>

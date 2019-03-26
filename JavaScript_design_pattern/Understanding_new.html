@@ -1,0 +1,56 @@
+<meta charset="utf-8" />
+<script type="text/javascript">
+	// 在 Chrome和 Firefox等向外暴露了对象__proto__属性的浏览器下，我们可以通过下面这段代 码来理解 new 运算的过程：
+
+	//new
+	function Person( name ){
+		this.name = name;
+	}; 
+ 
+	Person.prototype.getName = function(){
+		return this.name;
+	}; 
+
+
+	var a = new Person( 'sven' ) 
+ 
+	console.log( a.name );    // 输出：sven
+	console.log( a.getName() );     // 输出：sven
+	console.log( Object.getPrototypeOf( a ) === Person.prototype );     // 输出：true 
+
+
+	//非new,模拟new的过程
+	//。 用 new 运算符来创建对象的过程，实际上也只是先克隆 Object.prototype 对象，再进行一些其他额外操作的过程
+	//JavaScript 给对象提供了一个名为__proto__的隐藏属性，某个对象的__proto__属性默认会指 向它的构造器的原型对象
+	function Person( name ){
+		this.name = name;
+	}; 
+ 
+	Person.prototype.getName = function(){
+		return this.name;
+	}; 
+ 
+	var objectFactory = function(){
+		var obj = new Object(),// 从 Object.prototype 上克隆一个空的对象
+		Constructor = [].shift.call( arguments );    // 取得外部传入的构造器，此例是 Person 
+   		obj.__proto__ = Constructor.prototype;    // 指向正确的原型  我们让 obj.__proto__ 指向 Person.prototype，而不是原来的 Object.prototype
+    	var ret = Constructor.apply( obj, arguments );    // 借用外部传入的构造器给 obj 设置属性 
+ 
+   		return typeof ret === 'object' ? ret : obj;     // 确保构造器总是会返回一个对象
+	}; 
+ 
+	var a = objectFactory( Person, 'sven' ); 
+ 
+	console.log( a.name );    // 输出：sven
+	console.log( a.getName() );     // 输出：sven
+	console.log( Object.getPrototypeOf( a ) === Person.prototype );      // 输出：true 
+
+	//分别调用下面两句代码产生了一样的结果
+	// var a = objectFactory( A, 'sven' );
+	// var a = new A( 'sven' ); 
+
+
+	//JavaScript 给对象提供了一个名为__proto__的隐藏属性，某个对象的__proto__属性默认会指 向它的构造器的原型对象，即{Constructor}.prototype
+	var o = new Object();
+	console.log ( o.__proto__=== Object.prototype );    // 输出：true 
+</script>

@@ -1,0 +1,34 @@
+<html>
+    <meta charset="utf-8"/>
+    <body>
+        <div></div>
+        <script>
+            var MyImage=(function(){
+                var imgNode=document.createElement('img');
+                document.body.appendChild(imgNode);
+
+                return {
+                    setSrc:function(src){
+                        imgNode.src=src;
+                    }
+                }
+            })();
+
+            var proxyImage=(function(){
+                var img=new Image();
+                img.onload=function(){
+                    MyImage.setSrc(this.src);
+                }
+                return {
+                    setSrc:function(src){
+                        MyImage.setSrc('./img/timg.gif');
+                        img.src=src;
+                    }
+                }
+            })();
+
+            proxyImage.setSrc( 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1534326187983&di=89b35c51b2e8704832ce6b32f2c27934&imgtype=0&src=http%3A%2F%2Fs1.51cto.com%2Fwyfs02%2FM00%2F89%2F3D%2FwKiom1gNpmTi0SbcAADZAstpoVs486.jpg-wh_651x-s_411484445.jpg' ); 
+        </script>
+    </body>
+</html>
+
