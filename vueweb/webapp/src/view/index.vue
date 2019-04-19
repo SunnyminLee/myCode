@@ -1,38 +1,43 @@
 <template>
-<div  class="index-container">
-    <div class="alert-container">
-      <VueDraggableResizable 
-        :w="400" :h="500" 
-        style="border: 1px solid black;" 
-        :drag-handle="'.drag-handle'"
-        v-on:dragging="onDrag" v-on:resizing="onResize">
-          <div class="drag-handle alert-title">弹框标题xxxx</div>
-          <alertLayer></alertLayer>
-      </VueDraggableResizable>
-    </div> 
+  <div  class="index-container">
+    <h2 class="index-title">
+      vue中使用过的组件集合
+    </h2>
+    <ol class="index-content">
+      <li v-for="(item,index) in listName" :key="index">
+        <!-- 使用 router-link 组件来导航. -->
+        <!-- 通过传入 `to` 属性指定链接. -->
+        <!-- <router-link> 默认会被渲染成一个 `<a>` 标签 -->
+       <router-link :to="'/'+item.url">
+          <span>{{item.name}}</span>
+        </router-link>
+      </li>
+    </ol>
   </div> 
 </template> 
 
 <script>
-import VueDraggableResizable from 'vue-draggable-resizable'
-import alertLayer from './alertLayer.vue'
 
+import infoBox from './infoBox.vue'
 export default {
   data: function () {
     return {
-        width: 0,
-        height: 0,
-        x: 0,
-        y: 0
+      listName:[
+        {
+          name:"可拖拽拉伸弹框",
+          url:"infoBox"
+        },{
+          name:"可拖拽拉伸弹框",
+          url:"infoBox"
+        },
+      ]
     }
   },
   methods: {
-    onResize(){},
-    onDrag(){}
+
   },
   components:{
-    VueDraggableResizable,
-    alertLayer
+    infoBox,//可拖拽移动弹框
   }
 }
 </script>
@@ -44,14 +49,10 @@ export default {
     margin: 0;
     padding: 0;
   }
-  .alert-container{
-   /* position: absolute;
-    top: 20%;
-    left: 30%*/
+  .infoBox-container{
     position: relative;
-    /*margin-top: 200px；*/
   }
-  .alert-title{
+  .infoBox-title{
     width: 100%;
     text-align: left;
     background-color: #ccc;

@@ -1,0 +1,21 @@
+//可拖拽拉伸弹框
+// 弹框宽高
+$infoboxBgColor = #0093F1 
+$infoboxTitleheight = 34px
+$infoboxWidth = 400px
+$infoboxHeight = 480px
+contentWarpStyl()
+    width $infoboxWidth!important
+    height $infoboxHeight!important
+    //外阴影：box-shadow: X轴  Y轴  Rpx  color;
+    box-shadow 1px 1px 1px $infoboxBgColor
+    border 1px solid $infoboxBgColor
+    position absolute
+    margin-top 80px
+    margin-left 40%
+contentTitleStyl()
+    background-color $infoboxBgColor
+    color #fff
+    height $infoboxTitleheight
+    line-height $infoboxTitleheight
+    padding 2px
