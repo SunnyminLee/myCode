@@ -19,6 +19,7 @@
 <script>
 
 import infoBox from './infoBox.vue'
+import echartFn from './echartFn'
 export default {
   data: function () {
     return {
@@ -27,8 +28,8 @@ export default {
           name:"可拖拽拉伸弹框",
           url:"infoBox"
         },{
-          name:"可拖拽拉伸弹框",
-          url:"infoBox"
+          name:"Echart-应用实例",
+          url:"echartFn"
         },
       ]
     }
@@ -38,23 +39,17 @@ export default {
   },
   components:{
     infoBox,//可拖拽移动弹框
+    echartFn,//Echart-自绘地图
   }
 }
 </script>
 
 
-<style type="text/css">
+<style lang="stylus">
 
-  *{
-    margin: 0;
-    padding: 0;
-  }
-  .infoBox-container{
-    position: relative;
-  }
-  .infoBox-title{
-    width: 100%;
-    text-align: left;
-    background-color: #ccc;
-  }
+.index-container
+  position relative 
+  margin  10px
+  .index-content
+    margin-left 20px
 </style>
